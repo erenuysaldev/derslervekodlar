@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35222.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lesson13_Siniflar", "lesson13_Siniflar.csproj", "{1EBB5F7A-FF63-47E8-9622-153449620C2B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1EBB5F7A-FF63-47E8-9622-153449620C2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EBB5F7A-FF63-47E8-9622-153449620C2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EBB5F7A-FF63-47E8-9622-153449620C2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EBB5F7A-FF63-47E8-9622-153449620C2B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C559D9C2-0254-442D-B647-92AC350B914B}
+	EndGlobalSection
+EndGlobal
