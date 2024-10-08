@@ -31,7 +31,7 @@
 --FROM Ogrenciler o
 
 --******************************--
--- FÝLTRELEME ÝÞLEMLERÝ
+-- FÝLTRELEME ve AGREGATE ÝÞLEMLERÝ
 
 --******************************--
 --SELECT
@@ -52,5 +52,14 @@
 ----WHERE o.DogumTarihi IS NULL
 --WHERE o.DogumTarihi IS NOT NULL,
 
-SELECT SUM(d.Kredi) AS Toplam
-FROM Dersler d
+--SELECT SUM(d.Kredi) AS Toplam
+--FROM Dersler d
+
+--SELECT COUNT(*) AS [Öðrenci Sayýsý]
+--FROM Ogrenciler o
+--WHERE o.BolumId=2
+--SELECT COUNT (o.DogumTarihi)
+--FROM Ogrenciler O
+--WHERE o.DogumTarihi IS NOT NULL
+
+--SELECT AVG(d.Kredi)
