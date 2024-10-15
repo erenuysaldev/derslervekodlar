@@ -1,0 +1,34 @@
+--SELECT GETDATE()
+--SELECT YEAR(GETDATE())
+--SELECT MONTH(GETDATE())
+--SELECT DAY(GETDATE())
+--SELECT 
+--		e.FirstName + ' ' +e.LastName AS [Çalýþan],
+--		e.HireDate AS [Ýþe Baþlama Tarihi]
+--FROM Employees e
+--WHERE MONTH(GETDATE())=MONTH(e.BirthDate)
+--WHERE MONTH('2024-1-8')=MONTH(e.BirthDate)
+--WHERE DAY(e.HireDate) BETWEEN 3 AND 11
+--SELECT 
+-- o.OrderID AS [ID],
+-- o.OrderDate AS [Sipariþ Tarihi],
+-- DATEADD(DAY,5,o.OrderDate)AS[Planlanan en geç kargo tarihi],
+-- o.ShippedDate AS [Gerçekleþen Kargo Tarihi],
+-- DATEDIFF(MONTH,DATEADD(DAY,5,o.OrderDate),o.ShippedDate) AS [Gecikme]
+----CAST(o.ShippedDate-DATEADD(DAY,5,o.OrderDate) AS int)as [Gecikme]
+--FROM Orders o
+--WHERE DATEADD(DAY,5,o.OrderDate)<o.ShippedDate
+--ORDER BY Gecikme DESC
+--SELECT ABS(-87)
+--SELECT CEILING(4.01)
+--SELECT FLOOR (4.99)
+--SELECT CAST(ROUND(4.6,0) AS INT)
+--SELECT CAST(ROUND(4.7386,2)as DECIMAL(10,2))
+--SELECT POWER(3,2)
+--SELECT POWER(2,8)
+--SELECT LEN('infotech')
+--SELECT UPPER('INFOTECH')
+--SELECT LOWER('INFOTECH')
+
+--SELECT SUBSTRING('InfoTech',1,4)
+SELECT REPLACE('Besiktas bugun ilk macina cikiyor',' ','-')
