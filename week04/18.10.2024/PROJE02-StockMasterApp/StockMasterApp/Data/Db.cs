@@ -13,10 +13,10 @@ namespace StockMasterApp.Data
         public static SqlConnection Connection { get; set; }= CreateConnection();
         private static SqlConnection CreateConnection()
         {
-            string serverName = "DESKTOP-488APMT\\SQLSERVER";
+            string serverName = "";//your sql server servername
             string databaseName = "StockMaster";
-            string userName = "sa";
-            string password = "1234";
+            string userName = "";//your sql server username
+            string password = "";// your sql server password
             bool trustServerCertificate = true;
 
             string connectionString = $"Server={serverName};Database={databaseName};User={userName};Password={password};TrustServerCertificate={trustServerCertificate}";
