@@ -1,0 +1,6 @@
+﻿1) Microsoft.EntityFrameworkCore.SqlServer paketini kuruyoruz.
+2) Microsoft.EntityFrameworkCore.Design paketini kuruyoruz.
+3) NOT: Sistemimizde EF Tools yüklü olmalı. Yüklü değilse Dotnet-Ef tool'unu kuruyoruz.
+4) Proje klasöründe terminal açarak aşağıdaki komutu veriyoruz.
+
+dotnet ef dbcontext scaffold "Server=DESKTOP-488APMT\SQLSERVER;Database=Northwind;User=sa;Password=1234;TrustServerCertificate=true" Microsoft.EntityFrameworkCore.SqlServer  --context-dir Models/Contexts --context "NorthwindDbContext" --output-dir Models/Entities --force

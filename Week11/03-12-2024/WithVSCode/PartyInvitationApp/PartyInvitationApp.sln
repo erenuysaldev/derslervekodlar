@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartyInvitationApp.MVC", "PartyInvitationApp.MVC\PartyInvitationApp.MVC.csproj", "{E026B676-B182-4F1E-93EB-790753F81CED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartyInvitationApp.Business", "PartyInvitationApp.Business\PartyInvitationApp.Business.csproj", "{3184A9A6-E7A2-49F5-AC4C-0CEC3F9806FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartyInvitationApp.Data", "PartyInvitationApp.Data\PartyInvitationApp.Data.csproj", "{A95D5061-549F-4E11-BC90-9F2973F72F8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartyInvitationApp.Entity", "PartyInvitationApp.Entity\PartyInvitationApp.Entity.csproj", "{9C1313DB-B552-4BFE-B31A-13FB8A9DA768}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartyInvitationApp.Shared", "PartyInvitationApp.Shared\PartyInvitationApp.Shared.csproj", "{BA40270F-11A8-41F4-8A8F-D663C3AEB704}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E026B676-B182-4F1E-93EB-790753F81CED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E026B676-B182-4F1E-93EB-790753F81CED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E026B676-B182-4F1E-93EB-790753F81CED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E026B676-B182-4F1E-93EB-790753F81CED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3184A9A6-E7A2-49F5-AC4C-0CEC3F9806FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3184A9A6-E7A2-49F5-AC4C-0CEC3F9806FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3184A9A6-E7A2-49F5-AC4C-0CEC3F9806FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3184A9A6-E7A2-49F5-AC4C-0CEC3F9806FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A95D5061-549F-4E11-BC90-9F2973F72F8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A95D5061-549F-4E11-BC90-9F2973F72F8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A95D5061-549F-4E11-BC90-9F2973F72F8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A95D5061-549F-4E11-BC90-9F2973F72F8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C1313DB-B552-4BFE-B31A-13FB8A9DA768}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C1313DB-B552-4BFE-B31A-13FB8A9DA768}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C1313DB-B552-4BFE-B31A-13FB8A9DA768}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C1313DB-B552-4BFE-B31A-13FB8A9DA768}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA40270F-11A8-41F4-8A8F-D663C3AEB704}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA40270F-11A8-41F4-8A8F-D663C3AEB704}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA40270F-11A8-41F4-8A8F-D663C3AEB704}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA40270F-11A8-41F4-8A8F-D663C3AEB704}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

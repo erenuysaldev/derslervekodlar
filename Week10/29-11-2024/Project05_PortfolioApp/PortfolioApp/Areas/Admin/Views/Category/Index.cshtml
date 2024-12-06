@@ -1,0 +1,60 @@
+﻿@model List<Category>
+@*
+    @model List<Category> diyerek buraya gelecek olan verinin tipinin bir List<Category> olduğunu belirtmiş olduk, yani veriyi karşıladık. Aynı zamanda öntanımlı adı Model olan bir değişkenin içine veriyi almış olduk.
+*@
+<div class="page-header d-flex justify-content-between">
+    <h3 class="display-6 text-primary mb-1">Kategoriler</h3>
+    <a asp-area="Admin" asp-controller="Category" asp-action="Create" title="Yeni kategori eklemek için tıklayınız."
+            class="btn btn-icon btn-round btn-success">
+        <i class="fa fa-plus"></i>
+    </a>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table
+                    id="entityDataTable"
+                    class="display table table-striped table-hover"
+                    >
+                        <thead>
+                            <tr>
+                                <th width="30">Id</th>
+                                <th>Kategori</th>
+                                <th width="115">İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var x in Model)
+                            {
+                                <tr>
+                                    <td>@x.Id</td>
+                                    <td>@x.Name</td>
+                                    <td>
+                                        <a asp-area="Admin" asp-controller="Category" asp-action="Edit" asp-route-id="@x.Id" title="Düzenlemek için tıklayınız."
+                                           class="btn btn-icon btn-round btn-warning">
+                                            <i class="fa fa-pen"></i>
+                                        </a>
+                                        <a asp-area="Admin" asp-controller="Category" asp-action="SoftDelete" asp-route-id="@x.Id" title="Silmek için tıklayınız."
+                                           class="btn btn-icon btn-round btn-info">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                        <a asp-area="Admin" asp-controller="Category" asp-action="HardDelete" asp-route-id="@x.Id" title="Kalıcı olarak silmek için tıklayınız."
+                                           class="btn btn-icon btn-round btn-danger">
+                                            <i class="fa fa-trash-alt"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <partial name="_DataTablesScriptsPartial" />
+}

@@ -1,0 +1,20 @@
+﻿CodeFirst: Veritabanını yaratmadan önce, c# içerisindeki yapılanmalarımızı hazırlayıp, bu yapılanmalara göre veritabanının yaratılmasını, gerektiğinde güncellenmesini vb işlemeleri sağlama tekniğidir.
+
+1) Öncelikle Microsoft.EntityFrameworkCore.SqlServer ve Design paketleri yüklenmelidir.
+
+2) Entity Class'larımız yaratılmalıdır.
+
+3) DbContext classımız yaratılmalıdır. Her Entity için bir DbSet hazırlanmalıdır.
+
+4) AppSettings dosyasına ConnectionStrings oluşturalım.
+
+5) Program.cs'te DbContext servisini kaydedelim.
+
+6) DbContext'e geçip constructor metodumuzu yazalım.
+
+7) Migration ekleyerek, veri tabanını güncellerken neler yapacağını belirtiyoruz.
+   dotnet ef migrations add InitialDb (InitialDb migratin'a verdiğimi isimdir.)
+
+8) Hazırlanan migration dosyasını kullanarak veri tabanını güncelleyelim.
+	dotnet ef database update
+
