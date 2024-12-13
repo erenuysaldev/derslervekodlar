@@ -3,19 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using PartyApp.Data.Concrete;
 
 #nullable disable
 
 namespace PartyApp.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241206080307_SampleOtherData")]
-    partial class SampleOtherData
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,7 +22,7 @@ namespace PartyApp.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Invitation", b =>
+            modelBuilder.Entity("PartyApp.Entity.Concrete.Invitation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -37,11 +35,12 @@ namespace PartyApp.Data.Migrations
 
                     b.Property<string>("EventName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Invitations");
+                    b.ToTable("Invitations", (string)null);
 
                     b.HasData(
                         new
@@ -58,23 +57,15 @@ namespace PartyApp.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("InvitationParticipant", b =>
+            modelBuilder.Entity("PartyApp.Entity.Concrete.InvitationParticipant", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<int>("InvitationId")
                         .HasColumnType("int");
 
                     b.Property<int>("ParticipantId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("InvitationId");
+                    b.HasKey("InvitationId", "ParticipantId");
 
                     b.HasIndex("ParticipantId");
 
@@ -83,121 +74,87 @@ namespace PartyApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
                             InvitationId = 1,
                             ParticipantId = 1
                         },
                         new
                         {
-                            Id = 2,
                             InvitationId = 1,
                             ParticipantId = 2
                         },
                         new
                         {
-                            Id = 3,
                             InvitationId = 1,
                             ParticipantId = 3
                         },
                         new
                         {
-                            Id = 4,
                             InvitationId = 1,
                             ParticipantId = 4
                         },
                         new
                         {
-                            Id = 5,
                             InvitationId = 1,
                             ParticipantId = 5
                         },
                         new
                         {
-                            Id = 6,
                             InvitationId = 1,
                             ParticipantId = 6
                         },
                         new
                         {
-                            Id = 7,
                             InvitationId = 1,
                             ParticipantId = 7
                         },
                         new
                         {
-                            Id = 8,
                             InvitationId = 1,
                             ParticipantId = 8
                         },
                         new
                         {
-                            Id = 9,
                             InvitationId = 1,
-                            ParticipantId = 9
+                            ParticipantId = 10
                         },
                         new
                         {
-                            Id = 10,
-                            InvitationId = 2,
-                            ParticipantId = 1
-                        },
-                        new
-                        {
-                            Id = 11,
                             InvitationId = 2,
                             ParticipantId = 2
                         },
                         new
                         {
-                            Id = 12,
-                            InvitationId = 2,
-                            ParticipantId = 3
-                        },
-                        new
-                        {
-                            Id = 13,
                             InvitationId = 2,
                             ParticipantId = 4
                         },
                         new
                         {
-                            Id = 14,
-                            InvitationId = 2,
-                            ParticipantId = 5
-                        },
-                        new
-                        {
-                            Id = 15,
                             InvitationId = 2,
                             ParticipantId = 6
                         },
                         new
                         {
-                            Id = 16,
                             InvitationId = 2,
                             ParticipantId = 7
                         },
                         new
                         {
-                            Id = 17,
                             InvitationId = 2,
                             ParticipantId = 8
                         },
                         new
                         {
-                            Id = 18,
                             InvitationId = 2,
                             ParticipantId = 9
                         },
                         new
                         {
-                            Id = 19,
                             InvitationId = 2,
                             ParticipantId = 10
                         });
                 });
 
-            modelBuilder.Entity("Participant", b =>
+            modelBuilder.Entity("PartyApp.Entity.Concrete.Participant", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -205,131 +162,132 @@ namespace PartyApp.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
+                    b.Property<byte?>("Age")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("NumberOfPeople")
-                        .HasColumnType("int");
+                    b.Property<byte>("NumberOfPeople")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Participants");
+                    b.ToTable("Participants", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            Age = 18,
-                            Email = "eren@business.com",
-                            FullName = "Eren",
-                            NumberOfPeople = 1,
-                            PhoneNumber = "123123123"
+                            Age = (byte)48,
+                            Email = "didierdrogba@gmail.com",
+                            FullName = "Didier Drogba",
+                            NumberOfPeople = (byte)1,
+                            PhoneNumber = ""
                         },
                         new
                         {
                             Id = 2,
-                            Age = 22,
-                            Email = "elif@example.com",
-                            FullName = "Elif",
-                            NumberOfPeople = 2,
-                            PhoneNumber = "456456456"
+                            Age = (byte)37,
+                            Email = "lionelmessi@gmail.com",
+                            FullName = "Lionel Messi",
+                            NumberOfPeople = (byte)3,
+                            PhoneNumber = "123-456-7890"
                         },
                         new
                         {
                             Id = 3,
-                            Age = 30,
-                            Email = "ahmet@workmail.com",
-                            FullName = "Ahmet",
-                            NumberOfPeople = 3,
-                            PhoneNumber = "789789789"
+                            Age = (byte)39,
+                            Email = "cristianoronaldo@gmail.com",
+                            FullName = "Cristiano Ronaldo",
+                            NumberOfPeople = (byte)5,
+                            PhoneNumber = "234-567-8901"
                         },
                         new
                         {
                             Id = 4,
-                            Age = 25,
-                            Email = "ayse@gmail.com",
-                            FullName = "Ayse",
-                            NumberOfPeople = 2,
-                            PhoneNumber = "111222333"
+                            Age = (byte)32,
+                            Email = "neymar@gmail.com",
+                            FullName = "Neymar Jr.",
+                            NumberOfPeople = (byte)2,
+                            PhoneNumber = "345-678-9012"
                         },
                         new
                         {
                             Id = 5,
-                            Age = 28,
-                            Email = "mert@corporate.com",
-                            FullName = "Mert",
-                            NumberOfPeople = 4,
-                            PhoneNumber = "222333444"
+                            Age = (byte)25,
+                            Email = "kylianmbappe@gmail.com",
+                            FullName = "Kylian Mbappé",
+                            NumberOfPeople = (byte)4,
+                            PhoneNumber = "456-789-0123"
                         },
                         new
                         {
                             Id = 6,
-                            Age = 35,
-                            Email = "zeynep@yahoo.com",
-                            FullName = "Zeynep",
-                            NumberOfPeople = 1,
-                            PhoneNumber = "333444555"
+                            Age = (byte)31,
+                            Email = "mohamedsalah@gmail.com",
+                            FullName = "Mohamed Salah",
+                            NumberOfPeople = (byte)4,
+                            PhoneNumber = "567-890-1234"
                         },
                         new
                         {
                             Id = 7,
-                            Age = 40,
-                            Email = "emre@hotmail.com",
-                            FullName = "Emre",
-                            NumberOfPeople = 5,
-                            PhoneNumber = "444555666"
+                            Age = (byte)33,
+                            Email = "kevindebruyne@gmail.com",
+                            FullName = "Kevin De Bruyne",
+                            NumberOfPeople = (byte)2,
+                            PhoneNumber = "678-901-2345"
                         },
                         new
                         {
                             Id = 8,
-                            Age = 19,
-                            Email = "selin@mail.com",
-                            FullName = "Selin",
-                            NumberOfPeople = 2,
-                            PhoneNumber = "555666777"
+                            Age = (byte)30,
+                            Email = "harrykane@gmail.com",
+                            FullName = "Harry Kane",
+                            NumberOfPeople = (byte)3,
+                            PhoneNumber = "789-012-3456"
                         },
                         new
                         {
                             Id = 9,
-                            Age = 27,
-                            Email = "bora@company.com",
-                            FullName = "Bora",
-                            NumberOfPeople = 3,
-                            PhoneNumber = "666777888"
+                            Age = (byte)38,
+                            Email = "sergioramos@gmail.com",
+                            FullName = "Sergio Ramos",
+                            NumberOfPeople = (byte)2,
+                            PhoneNumber = "890-123-4567"
                         },
                         new
                         {
                             Id = 10,
-                            Age = 32,
-                            Email = "deniz@business.org",
-                            FullName = "Deniz",
-                            NumberOfPeople = 1,
-                            PhoneNumber = "777888999"
+                            Age = (byte)35,
+                            Email = "robertlewandowski@gmail.com",
+                            FullName = "Robert Lewandowski",
+                            NumberOfPeople = (byte)4,
+                            PhoneNumber = "901-234-5678"
                         });
                 });
 
-            modelBuilder.Entity("InvitationParticipant", b =>
+            modelBuilder.Entity("PartyApp.Entity.Concrete.InvitationParticipant", b =>
                 {
-                    b.HasOne("Invitation", "Invitation")
-                        .WithMany()
+                    b.HasOne("PartyApp.Entity.Concrete.Invitation", "Invitation")
+                        .WithMany("InvitationParticipants")
                         .HasForeignKey("InvitationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Participant", "Participant")
-                        .WithMany()
+                    b.HasOne("PartyApp.Entity.Concrete.Participant", "Participant")
+                        .WithMany("InvitationParticipants")
                         .HasForeignKey("ParticipantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -337,6 +295,16 @@ namespace PartyApp.Data.Migrations
                     b.Navigation("Invitation");
 
                     b.Navigation("Participant");
+                });
+
+            modelBuilder.Entity("PartyApp.Entity.Concrete.Invitation", b =>
+                {
+                    b.Navigation("InvitationParticipants");
+                });
+
+            modelBuilder.Entity("PartyApp.Entity.Concrete.Participant", b =>
+                {
+                    b.Navigation("InvitationParticipants");
                 });
 #pragma warning restore 612, 618
         }

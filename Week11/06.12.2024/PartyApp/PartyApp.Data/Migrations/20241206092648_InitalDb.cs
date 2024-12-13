@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PartyApp.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class SampleOtherData : Migration
+    public partial class InitalDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,7 +19,7 @@ namespace PartyApp.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EventName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EventName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     EventDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -33,11 +33,11 @@ namespace PartyApp.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Age = table.Column<int>(type: "int", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NumberOfPeople = table.Column<int>(type: "int", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    FullName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Age = table.Column<byte>(type: "tinyint", nullable: true),
+                    NumberOfPeople = table.Column<byte>(type: "tinyint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,14 +48,12 @@ namespace PartyApp.Data.Migrations
                 name: "InvitationParticipants",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     InvitationId = table.Column<int>(type: "int", nullable: false),
                     ParticipantId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_InvitationParticipants", x => x.Id);
+                    table.PrimaryKey("PK_InvitationParticipants", x => new { x.InvitationId, x.ParticipantId });
                     table.ForeignKey(
                         name: "FK_InvitationParticipants_Invitations_InvitationId",
                         column: x => x.InvitationId,
@@ -84,48 +82,40 @@ namespace PartyApp.Data.Migrations
                 columns: new[] { "Id", "Age", "Email", "FullName", "NumberOfPeople", "PhoneNumber" },
                 values: new object[,]
                 {
-                    { 1, 18, "eren@business.com", "Eren", 1, "123123123" },
-                    { 2, 22, "elif@example.com", "Elif", 2, "456456456" },
-                    { 3, 30, "ahmet@workmail.com", "Ahmet", 3, "789789789" },
-                    { 4, 25, "ayse@gmail.com", "Ayse", 2, "111222333" },
-                    { 5, 28, "mert@corporate.com", "Mert", 4, "222333444" },
-                    { 6, 35, "zeynep@yahoo.com", "Zeynep", 1, "333444555" },
-                    { 7, 40, "emre@hotmail.com", "Emre", 5, "444555666" },
-                    { 8, 19, "selin@mail.com", "Selin", 2, "555666777" },
-                    { 9, 27, "bora@company.com", "Bora", 3, "666777888" },
-                    { 10, 32, "deniz@business.org", "Deniz", 1, "777888999" }
+                    { 1, (byte)48, "didierdrogba@gmail.com", "Didier Drogba", (byte)1, "" },
+                    { 2, (byte)37, "lionelmessi@gmail.com", "Lionel Messi", (byte)3, "123-456-7890" },
+                    { 3, (byte)39, "cristianoronaldo@gmail.com", "Cristiano Ronaldo", (byte)5, "234-567-8901" },
+                    { 4, (byte)32, "neymar@gmail.com", "Neymar Jr.", (byte)2, "345-678-9012" },
+                    { 5, (byte)25, "kylianmbappe@gmail.com", "Kylian Mbappé", (byte)4, "456-789-0123" },
+                    { 6, (byte)31, "mohamedsalah@gmail.com", "Mohamed Salah", (byte)4, "567-890-1234" },
+                    { 7, (byte)33, "kevindebruyne@gmail.com", "Kevin De Bruyne", (byte)2, "678-901-2345" },
+                    { 8, (byte)30, "harrykane@gmail.com", "Harry Kane", (byte)3, "789-012-3456" },
+                    { 9, (byte)38, "sergioramos@gmail.com", "Sergio Ramos", (byte)2, "890-123-4567" },
+                    { 10, (byte)35, "robertlewandowski@gmail.com", "Robert Lewandowski", (byte)4, "901-234-5678" }
                 });
 
             migrationBuilder.InsertData(
                 table: "InvitationParticipants",
-                columns: new[] { "Id", "InvitationId", "ParticipantId" },
+                columns: new[] { "InvitationId", "ParticipantId" },
                 values: new object[,]
                 {
-                    { 1, 1, 1 },
-                    { 2, 1, 2 },
-                    { 3, 1, 3 },
-                    { 4, 1, 4 },
-                    { 5, 1, 5 },
-                    { 6, 1, 6 },
-                    { 7, 1, 7 },
-                    { 8, 1, 8 },
-                    { 9, 1, 9 },
-                    { 10, 2, 1 },
-                    { 11, 2, 2 },
-                    { 12, 2, 3 },
-                    { 13, 2, 4 },
-                    { 14, 2, 5 },
-                    { 15, 2, 6 },
-                    { 16, 2, 7 },
-                    { 17, 2, 8 },
-                    { 18, 2, 9 },
-                    { 19, 2, 10 }
+                    { 1, 1 },
+                    { 1, 2 },
+                    { 1, 3 },
+                    { 1, 4 },
+                    { 1, 5 },
+                    { 1, 6 },
+                    { 1, 7 },
+                    { 1, 8 },
+                    { 1, 10 },
+                    { 2, 2 },
+                    { 2, 4 },
+                    { 2, 6 },
+                    { 2, 7 },
+                    { 2, 8 },
+                    { 2, 9 },
+                    { 2, 10 }
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_InvitationParticipants_InvitationId",
-                table: "InvitationParticipants",
-                column: "InvitationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InvitationParticipants_ParticipantId",

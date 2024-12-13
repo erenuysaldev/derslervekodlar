@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using PartyApp.Business.Concrete;
 using PartyApp.MVC.Models;
 using System.Diagnostics;
 
@@ -6,27 +7,29 @@ namespace PartyApp.MVC.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly InvitationService _invitationService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(InvitationService invitationService)
         {
-            _logger = logger;
+            _invitationService = invitationService;
         }
 
         public IActionResult Index()
         {
+            var invitations = _invitationService.GetAll();
+            return View(invitations);
+        }
+        public IActionResult Join(int id)
+        {
+            var invitation = _invitationService.GetById(id);
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+
+
     }
+
+
+
 }
