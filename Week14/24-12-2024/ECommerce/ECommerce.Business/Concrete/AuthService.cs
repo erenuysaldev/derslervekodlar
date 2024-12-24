@@ -44,7 +44,8 @@ namespace ECommerce.Business.Concrete
             {
                 return ResponseDTO<TokenDTO>.Fail("Hatalı şifre!", StatusCodes.Status400BadRequest);
             }
-            GenerateJwtToken();
+            var tokenDTO = await GenerateJwtToken(user);
+            return ResponseDTO<TokenDTO>.Success(tokenDTO, StatusCodes.Status200OK);
         }
        
 
