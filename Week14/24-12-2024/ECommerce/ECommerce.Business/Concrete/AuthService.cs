@@ -6,6 +6,7 @@ using ECommerce.Shared.ResponseDTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
 namespace ECommerce.Business.Concrete
 {
@@ -35,15 +37,16 @@ namespace ECommerce.Business.Concrete
             var user = await _userManager.FindByEmailAsync(loginDTO.Email);
             if (user == null)
             {
-                return ResponseDTO<TokenDTO>.Fail("Böyle bir kullanıcı yok", StatusCodes.Status400BadRequest);
+                return ResponseDTO<TokenDTO>.Fail("Kullanıcı bulunamadı!", StatusCodes.Status400BadRequest);
             }
             var isValidPassword = await _userManager.CheckPasswordAsync(user, loginDTO.Password);
             if (!isValidPassword)
             {
-                return ResponseDTO<TokenDTO>.Fail("Hatalı şifre", StatusCodes.Status400BadRequest);
+                return ResponseDTO<TokenDTO>.Fail("Hatalı şifre!", StatusCodes.Status400BadRequest);
             }
             GenerateJwtToken();
         }
+       
 
         public async Task<ResponseDTO<NoContent>> RegisterAsync(RegisterDTO registerDTO)
         {
@@ -61,7 +64,8 @@ namespace ECommerce.Business.Concrete
                 Address = registerDTO.Address,
                 City = registerDTO.City,
                 Gender = registerDTO.Gender,
-                DateOfBirth = registerDTO.DateOfBirth
+                DateOfBirth = registerDTO.DateOfBirth,
+
             };
             var result = await _userManager.CreateAsync(applicationUser, registerDTO.Password);
             if (!result.Succeeded)
@@ -74,13 +78,13 @@ namespace ECommerce.Business.Concrete
                 return ResponseDTO<NoContent>.Fail(result.Errors.Select(x => x.Description).ToList(), StatusCodes.Status500InternalServerError);
             }
             return ResponseDTO<NoContent>.Success(StatusCodes.Status201Created);
-        }
 
+        }
         private async Task<TokenDTO> GenerateJwtToken(ApplicationUser user)
         {
             var roles = await _userManager.GetRolesAsync(user);
 
-            var claims = new[]
+            var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Email, user.Email),
@@ -88,7 +92,7 @@ namespace ECommerce.Business.Concrete
             }.Union(roles.Select(r => new Claim(ClaimTypes.Role, r)));
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtConfig.Secret));
-            var credential = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expiry = DateTime.Now.AddMinutes(_jwtConfig.AccessTokenExpiration);
 
             var token = new JwtSecurityToken(
@@ -96,13 +100,15 @@ namespace ECommerce.Business.Concrete
                 audience: _jwtConfig.Audience,
                 claims: claims,
                 expires: expiry,
-                signingCredentials: credential
-                );
+                signingCredentials: credentials
+            );
+
             var tokenDTO = new TokenDTO
             {
-                AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
-                ExpirationDate = expiry,
+                AccesToken = new JwtSecurityTokenHandler().WriteToken(token),
+                ExpirationDate = expiry
             };
+
             return tokenDTO;
         }
     }
