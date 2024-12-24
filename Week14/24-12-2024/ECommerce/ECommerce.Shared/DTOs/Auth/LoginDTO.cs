@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Shared.DTOs.Auth
 {
-    internal class LoginDTO
+    public class LoginDTO
     {
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 }

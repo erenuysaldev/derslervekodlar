@@ -62,8 +62,9 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuerSigningKey = true,
         ValidIssuer= jwtConfig?.Issuer,
         ValidAudience = jwtConfig?.Audience,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig.Secret))
-    };
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig?.Secret ?? ""))
+    }; .AddEntityFrameworkStores<ECommerceDbContext>().AddDefaultTokenProviders();
+
 });
 
 
