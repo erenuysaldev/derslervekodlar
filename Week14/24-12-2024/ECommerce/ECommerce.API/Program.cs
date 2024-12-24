@@ -1,4 +1,4 @@
-using ECommerce.Business.Abstract;
+ï»¿using ECommerce.Business.Abstract;
 using ECommerce.Business.Concrete;
 using ECommerce.Business.Configuration;
 using ECommerce.Business.Mapping;
@@ -19,15 +19,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<ECommerceDbContext>(x=>x.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerConnection")));
+builder.Services.AddDbContext<ECommerceDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerConnection")));
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
-
+builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
-//Identity ayarlarý 
+
+//Identity AyarlarÃ½
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
 {
     options.Password.RequireDigit = true;
@@ -37,17 +38,17 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
     options.Password.RequiredLength = 8;
 
     options.User.RequireUniqueEmail = true;
-    options.User.AllowedUserNameCharacters = "qwertyuopasdfghjklizxcvbnm1234567890-_.@";
+    options.User.AllowedUserNameCharacters = "abcdefghijklmnoqprstuvxyz0123456789-_.@";
 
 }).AddEntityFrameworkStores<ECommerceDbContext>().AddDefaultTokenProviders();
-//OptionsPattern kullanarak JwtConfig bilgilerini appsettings.json dosyasýndan okuyoruz.
+
+
+//OptionsPattern kullanarak JwtConfig bilgilerini appsettings.json dosyasÃ½ndan okuyoruz.
 builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
-var  jwtConfig = builder.Configuration.GetSection("JwtConfig").Get<JwtConfig>();
 
+var jwtConfig = builder.Configuration.GetSection("JwtConfig").Get<JwtConfig>();
 
-
-
-//JWT(Authentication) ayarlarý
+//JWT(Authentication) AyarlarÃ½
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -57,25 +58,24 @@ builder.Services.AddAuthentication(options =>
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
-        ValidateAudience=true,
+        ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer= jwtConfig?.Issuer,
+        ValidIssuer = jwtConfig?.Issuer,
         ValidAudience = jwtConfig?.Audience,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig?.Secret ?? ""))
-    }; .AddEntityFrameworkStores<ECommerceDbContext>().AddDefaultTokenProviders();
-
+    };
 });
 
 
 
-
-
-
-
-
-
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleService = scope.ServiceProvider.GetRequiredService<IRoleService>();
+    await roleService.SeedRolesAsync();
+}
 
 if (app.Environment.IsDevelopment())
 {
