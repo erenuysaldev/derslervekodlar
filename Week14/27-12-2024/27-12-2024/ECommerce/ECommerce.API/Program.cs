@@ -1,4 +1,4 @@
-ï»¿using ECommerce.Business.Abstract;
+using ECommerce.Business.Abstract;
 using ECommerce.Business.Concrete;
 using ECommerce.Business.Configuration;
 using ECommerce.Business.Mapping;
@@ -10,7 +10,6 @@ using ECommerce.Entity.Concrete;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -20,17 +19,19 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<ECommerceDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerConnection")));
+builder.Services.AddDbContext<ECommerceDbContext>(x=>x.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerConnection")));
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<IRoleService, RoleService>();
-builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IBasketService, BasketService>();
+
+
+
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-//Identity AyarlarÃ½
+//Identity Ayarlarý
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
 {
     options.Password.RequireDigit = true;
@@ -43,45 +44,39 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
     options.User.AllowedUserNameCharacters = "abcdefghijklmnoqprstuvxyz0123456789-_.@";
 
 }).AddEntityFrameworkStores<ECommerceDbContext>().AddDefaultTokenProviders();
+
+
+//OptionsPattern kullanarak JwtConfig bilgilerini appsettings.json dosyasýndan okuyoruz.
 builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
-builder.Services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<JwtConfig>>().Value);
+builder.Services.AddDbContext<ECommerceDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerConnection")));
 
-
-
-
-//OptionsPattern kullanarak JwtConfig bilgilerini appsettings.json dosyasÃ½ndan okuyoruz.
-builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
 
 var jwtConfig = builder.Configuration.GetSection("JwtConfig").Get<JwtConfig>();
 
-//JWT(Authentication) AyarlarÃ½
+//JWT(Authentication) Ayarlarý
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultAuthenticateScheme= JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme= JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = jwtConfig?.Issuer,
-        ValidAudience = jwtConfig?.Audience,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig?.Secret ?? ""))
+        ValidateIssuer=true,
+        ValidateAudience=true,
+        ValidateLifetime=true,
+        ValidateIssuerSigningKey=true,
+        ValidIssuer= jwtConfig?.Issuer,
+        ValidAudience= jwtConfig?.Audience,
+        IssuerSigningKey=new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig?.Secret ?? ""))
     };
 });
 
-
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var roleService = scope.ServiceProvider.GetRequiredService<IRoleService>();
-    await roleService.SeedRolesAsync();
-}
 
 if (app.Environment.IsDevelopment())
 {
@@ -89,7 +84,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 app.UseHttpsRedirection();
+app.UseAuthentication();
 
 app.UseAuthorization();
 
