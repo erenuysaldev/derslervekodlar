@@ -93,7 +93,7 @@ namespace ECommerce.Business.Concrete
 
         public async Task<ResponseDTO<IEnumerable<OrderDTO>>> GetOrdersAsync(string applicationUserId)
         {
-            var orders = await _orderRepository.GetAllAsync(x => x.ApplicationUserId == applicationUserId, null, query => query.Include(o => o.OrderItems).ThenInclude(oi => oi.Product));
+            var orders = await _orderRepository.GetAllAsync(x => x.ApplicationUserId == applicationUserId, x => x.OrderByDescending(y => y.CreatedDate), query => query.Include(o => o.OrderItems).ThenInclude(oi => oi.Product));
             if (orders == null || !orders.Any())
             {
                 return ResponseDTO<IEnumerable<OrderDTO>>.Fail("Belirtilen duruma ait hiç sipariş bulunamadı", StatusCodes.Status404NotFound);
